@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MyApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <style>
+    .body{
+      margin: auto;
+      max-width: 400px;
+    }
+    label{
+     margin-bottom: 20px;
+     font-weight: bold;
+    }
+    input{
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      display: block;
+      width: 100%;
+    }
+  </style>
+
+ 
+</head>
+<body ng-app="myapp" ng-controller="formConroller" >
+  <app-root></app-root>
+  <form name="userform" ng-submit="submitform()" novalidate>
+  <div class="body">
+    <div>
+      <label>Email :</label>
+      <input type="email" name="email" ng-model="user.email" required>
+      <span style="color: red;" ng-show="userform.email.$dirty && userform.email.$invalid">email is invalid formate </span>
+    </div>
+    <div>
+      <label>name :</label>
+      <input type="text" name="name" ng-model="user.name" ng-pattern="/^[a-zA-Z]{5,}$/ " required>
+      <span style="color: red;" ng-show="userform.name.$dirty && userform.name.$invalid">Nme Must be  in 5 charecter  not letters </span>
+    </div>
+    <div>
+      <label>password:</label>
+      <input type="password" name="password" ng-model="user.password" ng-pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$/" required >
+      <span style="color: red;" ng-show="userform.password.$dirty && userform.password.$invalid">Password  Should  in onecapital,onesmall,onespeciallcharectera and one number and legnth should min 7 </span>
+    </div>
+    <div>
+      <label>phone:</label>
+      <input type="text" name="phone" ng-model="user.phone" ng-pattern="/^[6-9][0-9]{9}$/" required>
+      <span style="color: red;" ng-show="userform.phone.$dirty && userform.phone.$invalid">Invalid  phone number </span>
+    </div><br/>
+    <button type="submit" ng-disabled="userform.$invalid">Submit</button>
+  </div>
+</form>
+
+</body>
+</html>
+<script>
+  const app =angular.module("myapp",[]) ;
+ app.controller("formConroller",function($scope){
+  $scope.user ={};
+
+  $scope.submitform =function(){
+    if($scope.userform.$valid){
+      alert("form  Succefullt submitted");
+      $scope.user={};
+    }else{
+      alert("form is not submitted");
+    }
+  }
+ })
+</script>
